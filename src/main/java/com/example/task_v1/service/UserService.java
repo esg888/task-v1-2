@@ -34,7 +34,12 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+//    public Mono<User> createUser(User user) {
+//        return userRepository.save(user);
+//    }
+
     public Mono<User> createUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 

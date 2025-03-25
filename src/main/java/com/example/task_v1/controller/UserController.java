@@ -29,7 +29,9 @@ public class UserController {
 
     @PostMapping
     public Mono<User> createUser(@RequestBody User user) {
+
         return userService.createUser(user);
+
     }
 
     @PutMapping("/{id}")
