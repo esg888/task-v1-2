@@ -51,20 +51,5 @@ public class UserService {
         return userRepository.deleteById(id);
     }
 
-    public void registerUser(RegistrationRequest registrationRequest) {
 
-        Optional<User> existingUser = userRepository.findByEmail(registrationRequest.getEmail()).blockOptional();
-        if (existingUser.isPresent()) {
-            throw new IllegalArgumentException("mail exists");
-        }
-
-        User user = new User();
-        user.setUsername(registrationRequest.getUsername());
-        user.setEmail(registrationRequest.getEmail());
-        user.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
-        user.setRoles(Collections.singleton(RoleType.valueOf("USER")));
-
-        userRepository.save(user);
-    }
-    
 }
