@@ -8,6 +8,7 @@ import com.example.task_v1.entity.User;
 import com.example.task_v1.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
@@ -19,7 +20,8 @@ public class UserController {
 
     @GetMapping
     public Flux<User> getAllUsers() {
-        return userService.getAllUsers();
+        return userService.getAllUsers()
+                .onErrorMap(e -> new ResponseStatusException(500, "Server Error", e));
     }
 
     @GetMapping("/{id}")
