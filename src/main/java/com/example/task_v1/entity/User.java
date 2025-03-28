@@ -10,9 +10,12 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.GrantedAuthority;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -28,6 +31,13 @@ public class User {
 
     private String password;
 
-    private Set<RoleType> roles = new HashSet<>();
+   private Set<RoleType> roles = new HashSet<>();
+
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.roles.stream()
+                .map(RoleType::toAuthority)
+                .collect(Collectors.toList());
+    }
+
     
 }

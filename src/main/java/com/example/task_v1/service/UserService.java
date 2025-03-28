@@ -16,6 +16,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import java.util.Collections;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -34,9 +35,6 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-//    public Mono<User> createUser(User user) {
-//        return userRepository.save(user);
-//    }
 
     public Mono<User> createUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -50,6 +48,5 @@ public class UserService {
     public Mono<Void> deleteUserById(String id) {
         return userRepository.deleteById(id);
     }
-
 
 }

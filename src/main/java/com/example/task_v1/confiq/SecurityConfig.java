@@ -38,18 +38,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/reg/**").permitAll()
                         .requestMatchers("/error/**").permitAll()
-                        .requestMatchers("/api/users/**")
-                                 .hasAnyRole("USER", "MANAGER")
-                        .requestMatchers("/api/tasks/**").hasAnyRole("USER", "MANAGER")
+                        .requestMatchers("/api/users/**").hasAnyRole("MANAGER", "USER") // Без ROLE_
                         .anyRequest().authenticated()
                 )
-                .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/api/reg/**")
-                )
                 .httpBasic(Customizer.withDefaults())
-                .formLogin(form -> form.disable())
-                .logout(logout -> logout.disable());
-
+                .csrf(csrf -> csrf.disable()); // Для тестов
         return http.build();
     }
 }
