@@ -39,6 +39,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/reg/**").permitAll()
                         .requestMatchers("/error/**").permitAll()
                         .requestMatchers("/api/users/**").hasAnyRole("MANAGER", "USER") // no ROLE_
+                        .requestMatchers("/api/tasks/**").hasAnyRole("MANAGER", "USER")
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())

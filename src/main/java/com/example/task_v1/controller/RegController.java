@@ -18,18 +18,6 @@ public class RegController {
 
     private final UserService userService;
 
-
-//    @PostMapping
-////    public ResponseEntity<?> registerUser(@RequestBody RegistrationRequest registrationRequest) {
-////        try {
-////            userService.registerUser(registrationRequest);
-////            return ResponseEntity.ok().body("user registered");
-////        } catch (Exception e) {
-////            return ResponseEntity.badRequest().body(e.getMessage());
-////        }
-////    }
-
-
     @PostMapping
     public Mono<User> createUser(@RequestBody User user) {
 
