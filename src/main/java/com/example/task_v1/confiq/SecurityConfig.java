@@ -1,6 +1,7 @@
 package com.example.task_v1.confiq;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -38,12 +39,15 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/reg/**").permitAll()
                         .requestMatchers("/error/**").permitAll()
-                        .requestMatchers("/api/users/**").hasAnyRole("MANAGER", "USER") // no ROLE_
-                        .requestMatchers("/api/tasks/**").hasAnyRole("MANAGER", "USER")
+                        .requestMatchers(HttpMethod.GET, "/api/tasks/**").hasAnyRole("USER", "MANAGER") // GET - getAllTasks, getTaskById
+                        .requestMatchers(HttpMethod.POST, "/api/tasks/**").hasRole("MANAGER")   // POST - create
+                        .requestMatchers(HttpMethod.PUT, "/api/tasks/**").hasRole("MANAGER")    // PUT - update
+                        .requestMatchers(HttpMethod.PATCH, "/api/tasks/**").hasAnyRole("USER", "MANAGER") // PATCH - addObserverToTask
+                        .requestMatchers(HttpMethod.DELETE, "/api/tasks/**").hasRole("MANAGER")
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())
-                .csrf(csrf -> csrf.disable()); // Для тестов
+                .csrf(csrf -> csrf.disable()); // чем заменить?
         return http.build();
     }
 }
