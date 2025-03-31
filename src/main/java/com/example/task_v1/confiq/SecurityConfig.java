@@ -38,7 +38,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/reg/**").permitAll()
                         .requestMatchers("/error/**").permitAll()
-                        .requestMatchers("/api/users/**").hasAnyRole("MANAGER", "USER") // Без ROLE_
+                        .requestMatchers("/api/users/**").hasAnyRole("MANAGER", "USER") // no ROLE_
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())
